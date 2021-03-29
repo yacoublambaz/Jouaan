@@ -14,6 +14,7 @@ def index(request): #main page
     #main page
 
 
+
 #Henri, Firas
 def restaurant_view(request,pk):
     #restaurant profile
