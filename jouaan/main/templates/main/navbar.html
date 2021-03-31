@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static%}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header style="max-height:40px;">
+    <a class="logo" href="/"><img src="{% static '/images/logo.png' %}" style="max-width:75%; " alt="logo"></a>
+    <nav>
+      <ul class="nav__links" >
+            <li><a href=" #">Login</a></li>
+            <li><a href="#">Register</a></li>
+            <li><a href="#">Submit a Review</a></li>
+            
+      </ul>
+    </nav>
+
+
+  </header>
+  <div id="mobile__menu" class="overlay">
+    <a class="close">&times;</a>
+    <div class="overlay__content">
+      <a href="#">Submit a Review</a>
+      <a href="#">Login</a>
+      <a href="#">About</a>
+    </div>
+  </div>
+  <script type="text/javascript" src="{% static '/js/mobile.js' %}"></script>
+</body>
+{% block content%}
+{% endblock content%}
+</body>
+
+</html>

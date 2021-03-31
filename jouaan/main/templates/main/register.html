@@ -1,0 +1,41 @@
+{% extends 'main/navbar.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  
+  <link rel="stylesheet" href=" {% static '/css/main.css' %}">
+</head>
+
+<body style="margin: 0;
+padding: 0;
+font-family: sans-serif;
+background-color:#F5F5DC;
+background-image:url({% static 'images/food-doodles.jpg' %});
+background-size:cover;
+background-position: center;
+background-blend-mode: lighten;
+">
+
+  <div class="sign-up-form">
+    <h2> Sign up </h2>
+    <form>
+      <input  type="username" name="username" class="input-box" placeholder="Username" />
+      <input  type="email" name="email" class="input-box" placeholder="Your Email" />
+      <input  type="password" name="password" class="input-box" placeholder="Password" />
+      <input  type="password" name="password2" class="input-box" placeholder="Confirm Password" />
+      <button type="submit" value="Submit" class="sign-up-btn">Sign Up</button>
+      <p> Do you have an account? <a href="{% url 'login' %}">Login</a></p>
+      <br>
+      <a style="margin-top: 10px;"href="#"> Sign up as Restaurant</a>
+    </form>
+  </div>
+
+</body>
+
+</html>
+{% endblock content %}
