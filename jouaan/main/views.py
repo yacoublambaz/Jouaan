@@ -35,6 +35,7 @@ def login_view(request):
 
 def logoutUser(request):
     logout(request)
+    list(messages.get_messages(request))
     return redirect('login')
 
 @unauthenticated_user
