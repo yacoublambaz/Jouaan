@@ -1,0 +1,106 @@
+* {
+    font-family: Arial;
+}
+
+.restosDIV {
+    width: 90%;
+    margin: auto;
+    height: 390px;
+}
+
+.restos {
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border: 2px solid black;
+}
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.restos img {
+    width: 280px;
+    height: 200px;
+}
+
+.restoHeader {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.restoHeader h1 {
+    margin: 0;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.search {
+    height: fit-content;
+    width: fit-content;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+.Rate {
+    height: 10 px;
+    width: 25 px;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.ratebutton {
+    height: 50px;
+    width: 100px;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+
+.checked {
+    color: orange;
+}
+
+.restoHeader input {
+    width: 300px;
+    margin-right: 0;
+}
+
+.resto h2 {
+    margin-top: 4px;
+}
+
+
+/*----------------Resto-----------------*/
+.resto {
+    border: 1px solid black;
+    text-align: center;
+    transition: 0.3s ease-out;
+    display: inline-block;
+    width: 280px;
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    margin-right: 4px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.resto:hover {
+    transition: 0.3s ease-in;
+    filter: brightness(1.15);
+}
+
+.resto h3 {
+    font-weight: lighter;
+    margin-top: 0;
+}
+
+.resto h2 {
+    margin-bottom: 0;
+}
+/*--------------------------------------*/

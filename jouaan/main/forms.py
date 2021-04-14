@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Customer,Restaurant
+
 #Customers Forms Below
 class newCustomerForm(UserCreationForm):
     """Creates a new Customer"""
@@ -30,10 +31,9 @@ class CustomerForm(ModelForm):
 class newRestaurantForm(UserCreationForm):
     """Creates a new Restaurant"""
     email = forms.EmailField(required = True)
-    phone_number = forms.CharField(max_length=12)
     class Meta:
         model = User
-        fields = ("username", "email", "phone_number", "password1", "password2")
+        fields = ("username", "email", "password1", "password2")
 
     def save(self, commit=True):
         user = super(newRestaurantForm, self).save(commit=False)

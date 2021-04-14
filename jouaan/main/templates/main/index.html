@@ -1,12 +1,140 @@
 {% include 'main/navbar.html' %}
 {% load static %}
+<head>
+  <title>All Your Foodie Needs | Joo3an</title>
+  <link rel="stylesheet" href="{% static '/css/index.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
 <body style = "margin: 0;
 padding: 0;
-font-family: sans-serif;
+font-family:Arial;
 background-color:#F5F5DC;
 background-image:url({% static 'images/food-doodles.jpg' %});
 background-size:cover;
 background-position: center;
 background-blend-mode: lighten;
-"></body>
+">
+
+<div class="restosDIV" >
+  <div class="restoHeader">
+
+      <h1>Restaurants</h1>
+      <div class="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+          <input type="search" name="" id="">
+      </div>
+  </div>
+  <br>
+  <div class="restos">
+      <div class="resto">
+          <img src="{% static '/images/1.jpg' %}" alt=""> <br><br>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <h2>Bento Box</h2>
+          <h3>Hazmieh</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/2.jpg' %}" alt=""> <br><br>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <h2>Mom's Burger</h2>
+          <h3>Furn EL Chebbek</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/3.jpg' %}" alt=""> <br><br>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <h2>Sofi de France</h2>
+          <h3>Ashrafieh</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/6.jpg' %}" alt=""> <br><br>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <h2>Shawarmunchies</h2>
+          <h3>Tarik El Jdide</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/7.jpg' %}" alt=""> <br><br>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <h2>Pasta Loco</h2>
+          <h3>Sassine</h3>
+      </div>
+  </div>
+</div>
+<br> <br> 
+<div class="restosDIV">
+  <div class="restoHeader">
+
+      <h1>Rate a restaurant! </h1>
+      <button type="submit" class="ratebutton">Rate a restaurant</button>
+  </div>
+  <br>
+  <div class="restos">
+      <div class="resto">
+          <img src="{% static '/images/10.jpg' %}" alt=""> <br><br>
+          <h2>Pad Thai Bey</h2>
+          <h3>Beirut</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/11.jpg' %}" alt=""> <br><br>
+          <h2>Fung chew</h2>
+          <h3>Baabda</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/12.jpg' %}" alt=""> <br><br>
+          <h2>Drippy</h2>
+          <h3>Amioun</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/13.jpg' %}" alt=""> <br><br>
+          <h2>Champs des Elysee</h2>
+          <h3>Sofil</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/14.jpg' %}" alt=""> <br><br>
+          <h2>Indian Palace</h2>
+          <h3>Batloun</h3>
+      </div>
+      <div class="resto">
+          <img src="{% static '/images/15.jpg' %}" alt=""> <br><br>
+          <h2>Roasty</h2>
+          <h3>Corniche El Mazraa</h3>
+    </div>
+    <div class="resto">
+          <img src="{% static '/images/16.jpg' %}" alt=""> <br><br>
+          <h2>Abdo Pastries</h2>
+          <h3>Aysha Bakkar</h3>
+  </div>
+  <div class="resto">
+        <img src="{% static '/images/17.jpg' %}" alt=""> <br><br>
+        <h2>Jai</h2>
+        <h3>Hamra</h3>
+  </div>
+  <div class="resto">
+    <img src="{% static '/images/18.jpg' %}" alt=""> <br><br>
+    <h2>Shish</h2>
+    <h3>Beirut</h3>
+  </div>
+  </div>
+</div>
+ 
+</body>
