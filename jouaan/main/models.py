@@ -4,13 +4,15 @@ from django.contrib.auth.models import User
 
 class Customer(models.Model):
     #needs to inherit Django User Model
-    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,null=True,blank=True, on_delete=models.CASCADE)
     #id
     id = models.IntegerField(primary_key=True)
     #name:
     name = models.CharField(max_length=200)
     #email:
     email = models.CharField(max_length=200)
+    #profile_pic
+    profile_pic = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "profile_pics/")
     #Number of reviews
     #This wouldn't work, instead, we need to filter all reviews
     #depending on Customer id
@@ -25,7 +27,7 @@ class Restaurant(models.Model):
     #restaurant name
     name = models.CharField(max_length=200)
     #picture
-    profile_pic = models.ImageField(null=True)
+    profile_pic = models.ImageField(upload_to = "",null=True, blank=True)
     #address
     address = models.CharField(max_length=200)
     #telephone number

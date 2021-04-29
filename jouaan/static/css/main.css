@@ -26,9 +26,16 @@
 }
 .sign-up-form h2
 {
-    color: #FF3800;
+    color: #FF3820;
     margin-bottom: 15px;
 }
+.sign-up-form h4
+{
+    color: #FF3800;
+    margin-bottom: 15px; 
+    
+}
+
 .input-box
 {
     border-radius: 20px;
@@ -60,4 +67,9 @@ hr{
     margin-top:20px;
     width: 80%;
 
+}
+
+img{
+    max-width:10px;
+    margin-top:-50px;
 }

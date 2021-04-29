@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group
+from .models import Customer, Restaurant
 # Create your views here.
 
 #Yacoub
@@ -48,6 +49,9 @@ def register_customer_view(request):
             username = form.cleaned_data.get('username')
             group = Group.objects.get(name='customer')
             user.groups.add(group)
+            Customer.objects.create(
+                user=user
+            )
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
@@ -69,6 +73,9 @@ def register_restaurant_view(request):
             username = form.cleaned_data.get('username')
             group = Group.objects.get(name='restaurant')
             user.groups.add(group)
+            Restaurant.objects.create(
+                user = user
+            )
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
@@ -85,10 +92,22 @@ def register_restaurant_view(request):
 def index(request): #main page
     return render(request,'main/index.html',context = {})
 
-
-
+@login_required(login_url='login')
+def update(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST,request.FILES, instance=customer)
+        
+        if form.is_valid():
+            
+            form.save()
+      
+    context = {'form':form}
+    return render(request,"main/update.html",context)
 #Henri, Firas
 #@allowed_users(allowed_roles = ['restaurant','customer'])
-def restaurant_view(request,pk):
-    #restaurant profile
-    pass
+
+def restaurant_view(request):
+    
+    return render(request,"main/restaurant.html",context= {})
