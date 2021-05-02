@@ -26,8 +26,10 @@ class Restaurant(models.Model):
     id = models.IntegerField(primary_key=True)
     #restaurant name
     name = models.CharField(max_length=200)
-    #picture
-    profile_pic = models.ImageField(upload_to = "",null=True, blank=True)
+    #logo
+    logo = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "logos/")
+    menu = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "menus/")
+    place = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "places/")
     #address
     address = models.CharField(max_length=200)
     #telephone number
@@ -45,8 +47,10 @@ class Review(models.Model):
     id = models.IntegerField(primary_key=True)
     #date auto_add_now
     review_date = models.DateTimeField(auto_now_add=True)
-    #customer (who did the review?)
-    customer = models.ForeignKey(Customer,on_delete = models.CASCADE)
+    #customer ID (who did the review?)
+    customer_id = models.IntegerField(null=True)
+    #restaurant ID (what restaurant is being reviewed?)
+    restaurant_id = models.IntegerField(null=True)
     #Cleanliness (numbers from 1 to 5)
     cleanliness = models.IntegerField(null=True)
     #Taste

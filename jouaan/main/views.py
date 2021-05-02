@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group
-from .models import Customer, Restaurant
+from .models import Customer, Restaurant, Review, Announcement
 # Create your views here.
 
 #Yacoub
@@ -67,7 +67,9 @@ def register_customer_view(request):
 def register_restaurant_view(request):
     
     if request.method == 'POST':
+        print(request.POST)
         form = newRestaurantForm(request.POST)
+        print(form)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -79,7 +81,9 @@ def register_restaurant_view(request):
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
+            print(form.error_messages)
             for msg in form.error_messages:
+
                 messages.error(request, f" {form.error_messages[msg]}")
             return render(request,'main/register_rest.html',{'form':form})
     #returns register page
@@ -109,5 +113,6 @@ def update(request):
 #@allowed_users(allowed_roles = ['restaurant','customer'])
 
 def restaurant_view(request):
-    
-    return render(request,"main/restaurant.html",context= {})
+    review = Review.objects.get(restaurant_id = 1)
+
+    return render(request,"main/restaurant.html",context= {'review':review})
