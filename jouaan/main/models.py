@@ -26,10 +26,11 @@ class Restaurant(models.Model):
     id = models.IntegerField(primary_key=True)
     #restaurant name
     name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200, null = True)
     #logo
-    logo = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "logos/")
-    menu = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "menus/")
-    place = models.ImageField(default = "default.jpg",null=True,blank=True, upload_to = "places/")
+    logo = models.ImageField(default = "defaultlogo.jpg",null=True,blank=True, upload_to = "logos/")
+    menu = models.ImageField(default = "defaultmenu.jpg",null=True,blank=True, upload_to = "menus/")
+    place = models.ImageField(default = "defaultplace.jpg",null=True,blank=True, upload_to = "places/")
     #address
     address = models.CharField(max_length=200)
     #telephone number

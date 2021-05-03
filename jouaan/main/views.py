@@ -74,9 +74,13 @@ def register_restaurant_view(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             group = Group.objects.get(name='restaurant')
+            phone = form.cleaned_data.get('phone_number')
+            email = form.cleaned_data.get('email')
             user.groups.add(group)
             Restaurant.objects.create(
-                user = user
+                user = user,
+                phone_number = phone,
+                email = email,
             )
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
@@ -109,6 +113,18 @@ def update(request):
       
     context = {'form':form}
     return render(request,"main/update.html",context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles = ['restaurant'])
+def update_restaurant(request):
+    restaurant = request.user.restaurant
+    form = RestaurantForm(instance = restaurant)
+    if request.method == 'POST':
+        form = RestaurantForm(request.POST,request.FILES,instance=restaurant)
+        if form.is_valid():
+            form.save()
+    context={'form':form}
+    return render(request,"main/restaurant_update.html",context)
 #Henri, Firas
 #@allowed_users(allowed_roles = ['restaurant','customer'])
 
