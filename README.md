@@ -2,6 +2,7 @@
  Review Web App For EECE 430
 
 To work with Jouaan:
+1. Make sure you're in Jouaan/jouaan
 1. pip install requirements.txt
 2. python manage.py runserver
 
