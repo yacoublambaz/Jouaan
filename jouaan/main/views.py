@@ -102,7 +102,6 @@ def register_restaurant_view(request):
     
 #Hassan Jawad, Karim
 def index(request): #main page
-    
     restaurants = Restaurant.objects.all()
     announcements = Announcement.objects.all()
     context = {'restaurants':restaurants,'announcements':announcements}
