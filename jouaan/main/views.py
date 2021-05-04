@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from .forms import newCustomerForm,CustomerForm,newRestaurantForm,RestaurantForm
+from .forms import newCustomerForm,CustomerForm,newRestaurantForm,RestaurantForm,ReviewForm,AnnouncementForm
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -45,16 +45,20 @@ def register_customer_view(request):
         form = newCustomerForm(request.POST)
         
         if form.is_valid():
+            
             user = form.save()
             username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
             group = Group.objects.get(name='customer')
             user.groups.add(group)
             Customer.objects.create(
-                user=user
+                user=user,
+                email = email
             )
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
+            
             for msg in form.error_messages:
                 messages.error(request, f" {form.error_messages[msg]}")
             return render(request,'main/register.html',{'form':form})
@@ -67,9 +71,9 @@ def register_customer_view(request):
 def register_restaurant_view(request):
     
     if request.method == 'POST':
-        print(request.POST)
+        
         form = newRestaurantForm(request.POST)
-        print(form)
+        
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -98,7 +102,11 @@ def register_restaurant_view(request):
     
 #Hassan Jawad, Karim
 def index(request): #main page
-    return render(request,'main/index.html',context = {})
+    
+    restaurants = Restaurant.objects.all()
+    announcements = Announcement.objects.all()
+    context = {'restaurants':restaurants,'announcements':announcements}
+    return render(request,'main/index.html',context)
 
 @login_required(login_url='login')
 def update(request):
@@ -120,15 +128,69 @@ def update_restaurant(request):
     restaurant = request.user.restaurant
     form = RestaurantForm(instance = restaurant)
     if request.method == 'POST':
+        
         form = RestaurantForm(request.POST,request.FILES,instance=restaurant)
         if form.is_valid():
             form.save()
     context={'form':form}
     return render(request,"main/restaurant_update.html",context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles = ['restaurant'])
+def announcements(request):
+    restaurant = request.user.restaurant
+    form = AnnouncementForm()
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST)
+        if form.is_valid():
+            Announcement.objects.create(restaurant = restaurant, text = form.cleaned_data.get('text'))
+    context={'form':form}
+    return render(request,"main/announcement.html",context)
 #Henri, Firas
 #@allowed_users(allowed_roles = ['restaurant','customer'])
 
-def restaurant_view(request):
-    review = Review.objects.get(restaurant_id = 1)
+def restaurant_view(request, pk):
+    restaurant = Restaurant.objects.get(id = pk)
+    review = Review.objects.filter(restaurant_id = pk)
+    current_total = 0
+    current_count = 0
+    for rev in review:
+        current_total += rev.review_score
+        current_count += 1
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            cleanliness = form.cleaned_data.get('cleanliness')
+            taste = form.cleaned_data.get('taste')
+            environment = form.cleaned_data.get('environment')
+            price = form.cleaned_data.get('price')
+            comments = form.cleaned_data.get('comments')
+            review_score = form.cleaned_data.get('review_score')
+            Review.objects.create(
+                customer = request.user.customer,
+                restaurant_id = pk,
+                cleanliness=cleanliness,
+                price = price,
+                comments = comments,
+                review_score = review_score,
+            )
+            current_total += review_score
+            current_count += 1
+            new_review_score = current_total/current_count
+            resto = Restaurant.objects.filter(id = pk).update(review_score = new_review_score)
+            return render(request,"main/restaurant.html",context= {'form':form,'review':review,'restaurant':restaurant})
 
-    return render(request,"main/restaurant.html",context= {'review':review})
+            
+    return render(request,"main/restaurant.html",context= {'form':form,'review':review,'restaurant':restaurant})
+
+def search_restos(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        restos = Restaurant.objects.filter(name__contains=searched)
+        context={'searched':searched,'restos':restos}
+
+        return render(request,"main/search_restos.html",context)
+    else:
+        context={}
+        return render(request,"main/search_restos.html",context)

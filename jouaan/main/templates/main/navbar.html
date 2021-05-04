@@ -19,17 +19,18 @@
             {% if request.user.is_authenticated%}
              
             <li> <a href = "{% url 'logout' %}"> Logout </a></li>
+            <li><a href="{% url 'search_restos'%}">Submit a Review</a></li>
             {% if request.user.customer %}
             <li> <a href = "{% url 'update' %}"> Profile </a></li>
             {% else %}
             <li> <a href = "{% url 'update-restaurant' %}"> Update Profile </a> </li>
-            <li> <a href = "{% url 'update-restaurant' %}"> Profile </a> </li>
+            
             {% endif %}
-            <li> <a href = "#"> Submit a Review </a></li>
+            
             {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'register' %}">Register</a></li>
-            <li><a href="#">Submit a Review</a></li>
+            <li><a href="{% url 'search_restos'%}">Submit a Review</a></li>
             {% endif %}
             
       </ul>

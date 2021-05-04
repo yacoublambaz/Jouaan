@@ -1,0 +1,67 @@
+{% include 'main/navbar.html' %}
+{% load static %}
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="{% static '/css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static '/css/restaurant.css' %}">
+    <title> Update Profile | Joo3an </title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body style="margin: 0;
+padding: 0;
+font-family:Arial;
+background-color:#F5F5DC;
+background-image:url({% static 'images/food-doodles.jpg' %});
+background-size:cover;
+background-position: center;
+background-blend-mode: lighten;
+">
+ <img style = "margin-top: 2.5%; max-width: 200px;" src = {{request.user.restaurant.logo.url}}>
+    <div style="margin-left:4%; margin-right:4%; margin-top:5%;">
+        <h2>Announcement Posting</h2>
+        
+
+        <div class="container">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fname">Announcement:</label>
+                    </div>
+                    <div class="col-75">
+                        {{form.text}}
+                    </div>
+                </div>
+                
+
+                
+
+
+                
+
+                
+
+                
+
+                
+
+
+                <div class="row">
+                    <input style="margin-right:15%;" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script src="{% static '/js/restaurant.js'%}"></script>
+</body>
+
+</html>

@@ -9,7 +9,9 @@ urlpatterns = [
     path('login/',views.login_view,name = "login"),
     path('logout/',views.logoutUser,name="logout"),
     path('',views.index,name = "index"),
-    path('restaurant/',views.restaurant_view,name = "restaurant"),
-    path('update',views.update,name="update"),
-    path('update-rest',views.update_restaurant,name="update-restaurant")
+    path('restaurant/<str:pk>',views.restaurant_view,name = "restaurant"),
+    path('update/',views.update,name="update"),
+    path('update-rest/',views.update_restaurant,name="update-restaurant"),
+    path('search_restos/',views.search_restos,name="search_restos"),
+    path('announcements/',views.announcements,name="announcements")
 ]

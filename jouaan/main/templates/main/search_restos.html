@@ -1,0 +1,68 @@
+{% include 'main/navbar.html' %}
+{% load static %}
+{% load mathfilters %}
+<head>
+  <title>Index</title>
+  <link rel="stylesheet" href="{% static '/css/index.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style = "margin: 0;
+padding: 0;
+font-family:Arial;
+background-color:#F5F5DC;
+background-image:url({% static 'images/food-doodles.jpg' %});
+background-size:cover;
+background-position: center;
+background-blend-mode: lighten;
+">
+
+<div class="restosDIV" >
+  <div class="restoHeader">
+
+      <h1>Search Results</h1>
+      <form class="search" method=POST action="{% url 'search_restos' %}">
+        {% csrf_token %}
+      <div class="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+          <input type="search" placeholder="Search For Restaurants" name="searched" id="">
+      </div>
+      </form>
+  </div>
+  <br>
+  {% if searched %}
+  {% if restos %}
+  <div class="restos">
+    {% for restaurant in restos %}
+    <div class="resto">
+      <img src="{{restaurant.profile_pic.url}}" alt=""> <br><br>
+      {% with ''|center:restaurant.review_score as range %}
+      {% for _ in range %}
+      <span class="fa fa-star checked"></span>
+      {% endfor %}
+      {% endwith %}
+      {% with decrement=5|sub:restaurant.review_score %}
+      {% with ''|center:decrement as range %}
+      {% for _ in range %}
+      <span class="fa fa-star"></span>
+      {% endfor %}
+      {% endwith %}
+      {% endwith %}
+        <h2><a href="{% url 'restaurant' restaurant.id %}">{{restaurant.name}}</a></h2>
+        <h3>{{restaurant.address}}</h3>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <h2>No match for your search.</h2>
+  {% endif %}
+  {% else %}
+  <h2>You haven't searched for anything!</h2>
+  {% endif %}
+</div>
+<br> <br>
+
+  <button class="btnbk" onclick="history.back()">Go Back</button>
+
+</body>

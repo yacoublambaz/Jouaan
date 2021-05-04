@@ -20,6 +20,7 @@ class Customer(models.Model):
     signup_date = models.DateTimeField(auto_now_add=True)
 
 class Restaurant(models.Model):
+    
     #inherits from Django User Model
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     #id
@@ -42,14 +43,21 @@ class Restaurant(models.Model):
     what_we_serve = models.CharField(max_length=200)
     #signup date
     signup_date = models.DateTimeField(auto_now_add=True)
+    #total review out of 5
+    review_score = models.IntegerField(null = True)
+    
+    def __str__(self):
+        return self.name
+
 
 class Review(models.Model):
+    
     #id
     id = models.IntegerField(primary_key=True)
     #date auto_add_now
     review_date = models.DateTimeField(auto_now_add=True)
     #customer ID (who did the review?)
-    customer_id = models.IntegerField(null=True)
+    customer = models.ForeignKey(Customer,on_delete = models.CASCADE, null = True)
     #restaurant ID (what restaurant is being reviewed?)
     restaurant_id = models.IntegerField(null=True)
     #Cleanliness (numbers from 1 to 5)

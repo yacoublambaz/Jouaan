@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Customer,Restaurant
+from .models import Customer,Restaurant,Review,Announcement
 from django.forms.widgets import FileInput
 #Customers Forms Below
 class newCustomerForm(UserCreationForm):
@@ -56,3 +56,13 @@ class RestaurantForm(ModelForm):
          'menu': FileInput(),
          'place': FileInput()
        }
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ("cleanliness","taste","environment","price","comments","review_score")
+
+class AnnouncementForm(ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ("text",)
