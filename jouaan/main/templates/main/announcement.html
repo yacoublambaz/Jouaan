@@ -23,10 +23,10 @@ background-size:cover;
 background-position: center;
 background-blend-mode: lighten;
 ">
- <img style = "margin-top: 2.5%; max-width: 200px;" src = {{request.user.restaurant.logo.url}}>
+    <img style="margin-top: 2.5%; max-width: 200px;" src={{request.user.restaurant.logo.url}}>
     <div style="margin-left:4%; margin-right:4%; margin-top:5%;">
         <h2>Announcement Posting</h2>
-        
+
 
         <div class="container">
             <form method="POST" action="" enctype="multipart/form-data">
@@ -40,7 +40,7 @@ background-blend-mode: lighten;
                         {{form.text}}
                     </div>
                 </div>
-                
+
 
 
                 <div class="row">

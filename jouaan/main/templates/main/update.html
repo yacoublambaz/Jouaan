@@ -21,31 +21,28 @@ background-position: center;
 background-blend-mode: lighten;
 ">
   <div class="sign-up-form">
-      <img style = 'max-width:125px; margin-top:-50px;' src = "{{ request.user.customer.profile_pic.url }}">
-      
+    <img style='max-width:125px; margin-top:-50px;' src="{{ request.user.customer.profile_pic.url }}">
+
     <h2> Update Information </h2>
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token%}
-      <h4 style = "color: #FF3800;
+      <h4 style="color: #FF3800;
       margin-bottom: 5px; "> Name: </h5>
-      {{form.name}}
-      <br/>
-      <h4 style = "color: #FF3800;
-      margin-bottom: 5px; margin-top:10px; "> Email: </h5> 
-      {{form.email}}
-      <br/>
-      <h4 style = "color: #FF3800;
+        {{form.name}}
+        <br />
+        <h4 style="color: #FF3800;
+      margin-bottom: 5px; margin-top:10px; "> Email: </h5>
+          {{form.email}}
+          <br />
+          <h4 style="color: #FF3800;
       margin-bottom: 5px;margin-top:10px; "> Change Display Picture: </h5>
-      <p style = "margin-right:-60px;">{{form.profile_pic}}</p>
-      
-      <br/>
-      <button type="submit" value="Submit" class="sign-up-btn">Submit</button>  
-      
-      <br>
-      
-      <p> Do you have an account? <a href="{% url 'login' %}">Login</a></p>
-      <br>
-      <a style="margin-top: 10px;" href="{% url 'register-restaurant' %}"> Sign up as Restaurant</a>
+            <p style="margin-right:-60px;">{{form.profile_pic}}</p>
+
+            <br />
+            <button type="submit" value="Submit" class="sign-up-btn">Submit</button>
+
+            <br>
+
     </form>
   </div>
 

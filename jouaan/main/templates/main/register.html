@@ -28,9 +28,10 @@ background-blend-mode: lighten;
       <input type="username" name="username" class="input-box" placeholder="Username" />
       <input type="email" name="email" class="input-box" placeholder="Your Email" />
       <input type="password" name="password1" class="input-box" placeholder="Password" />
-      
+
       <input type="password" name="password2" class="input-box" placeholder="Confirm Password" />
-      <p style = "font-size:16px;"> Your password must not be similar to your other information, and must be of at least 8 characters</p>
+      <p style="font-size:16px;"> Your password must not be similar to your other information, and must be of at least 8
+        characters</p>
       <button type="submit" value="Submit" class="sign-up-btn">Sign Up</button>
       {% for message in messages %}
       <p>{{message}}</p>

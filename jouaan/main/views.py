@@ -43,7 +43,7 @@ def logoutUser(request):
 def register_customer_view(request):
     if request.method == 'POST':
         form = newCustomerForm(request.POST)
-        print(form,request.POST)
+       
         if form.is_valid():
             
             user = form.save()
@@ -59,7 +59,7 @@ def register_customer_view(request):
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
-            print(form.error_messages)
+           
             for msg in form.error_messages:
                 
                 messages.error(request, f" {form.error_messages[msg]} or your password is too common")
@@ -93,7 +93,7 @@ def register_restaurant_view(request):
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
-            print(form.error_messages)
+            
             for msg in form.error_messages:
 
                 messages.error(request, f" {form.error_messages[msg]} or your password is too common")
@@ -116,6 +116,7 @@ def reviews(request):
     announcements = Announcement.objects.all()[:20]
     context = {'restaurants':restaurants,'announcements':announcements}
     return render(request,'main/review.html',context)
+
 @login_required(login_url='login')
 def update(request):
     customer = request.user.customer
@@ -138,8 +139,7 @@ def update_restaurant(request):
     if request.method == 'POST':
         
         form = RestaurantForm(request.POST,request.FILES,instance=restaurant)
-        print(form)
-        print(request.POST)
+        
         if form.is_valid():
             form.save()
     context={'form':form}
@@ -162,7 +162,7 @@ def announcements(request):
 
 def restaurant_view(request, pk):
     restaurant = Restaurant.objects.get(id = pk)
-    review = Review.objects.filter(restaurant_id = pk)
+    review = Review.objects.filter(restaurant_id = pk)[:20]
     current_total = 0
     current_count = 0
     for rev in review:
@@ -171,19 +171,15 @@ def restaurant_view(request, pk):
             current_count += 1
     form = ReviewForm()
     if request.method == 'POST':
-        print(request.POST)
-        print(form)
         form = ReviewForm(request.POST)
         if form.is_valid():
-            print('form valid')
             cleanliness = form.cleaned_data.get('cleanliness')
             taste = form.cleaned_data.get('taste')
             environment = form.cleaned_data.get('environment')
             price = form.cleaned_data.get('price')
             comments = form.cleaned_data.get('comments')
-            total = (int(cleanliness) + int(taste) + int(environment) + int(price))//4
-            
-           
+            total = (int(cleanliness) + int(taste) + int(environment) + int(price))/4
+            total = round(total)
             Review.objects.create(
                 customer = request.user.customer,
                 restaurant_id = pk,

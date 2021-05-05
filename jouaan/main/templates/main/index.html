@@ -3,14 +3,14 @@
 {% load mathfilters %}
 
 <head>
-  <title>Index</title>
-  <link rel="stylesheet" href="{% static '/css/index.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{% static '/css/restaurant.css' %}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Restaurants | Joo3an</title>
+    <link rel="stylesheet" href="{% static '/css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static '/css/restaurant.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style = "margin: 0;
+<body style="margin: 0;
 padding: 0;
 font-family:Arial;
 background-color:#F5F5DC;
@@ -19,73 +19,75 @@ background-size:cover;
 background-position: center;
 background-blend-mode: lighten;
 ">
-<br>
-
-<div class="restosDIV" >
-  <div class="restoHeader">
-
-      <h1>Restaurants</h1>
-      <form class="search" method=POST action="{% url 'search_restos' %}">
-        {% csrf_token %}
-      <div class="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-          <input type="search" placeholder="Search For Restaurants" name="searched" id="">
-      </div>
-      </form>
-  </div>
-  <br>
-  <div class="restos">
-      {% for restaurant in restaurants %}
-      <div class="resto">
-          <img src="{{restaurant.logo.url}}" alt=""> <br><br>
-          {% with ''|center:restaurant.review_score as range %}
-          {% for _ in range %}
-          <span class="fa fa-star checked"></span>
-          {% endfor %}
-          {% endwith %}
-          {% with decrement=5|sub:restaurant.review_score %}
-          {% with ''|center:decrement as range %}
-          {% for _ in range %}
-          <span class="fa fa-star"></span>
-          {% endfor %}
-          {% endwith %}
-          {% endwith %}
-          <h2><a href="{% url 'restaurant' restaurant.id %}">{{restaurant.name}}</a></h2>
-          <h3>{{restaurant.address}}</h3>
-      </div>
-      {% endfor %}
-  </div>
-</div>
-
-<br><br><br>
-
-<hr style= "width:60%; margin-left:20%"/>
-<br>
-<div style =  "background-color:#f2f2f2;">
-<div style="margin-left:4%;">
-  <h1>Announcements</h1><br>
-
-</div>
-<div style="margin-left:4%; margin-right:4%;">
-  <div id="btnContainer">
-
-  </div>
-
-  {% for announcement in announcements %}
-  <div class="row">
     <br>
-    <div class="column" style="background-color:#ffa805;">
-      <h2>{{announcement.restaurant}}</h2>
-      <p> {{announcement.text}}</p>
 
+    <div class="restosDIV">
+        <div class="restoHeader">
+
+            <h1>Restaurants</h1>
+            <form class="search" method=POST action="{% url 'search_restos' %}">
+                {% csrf_token %}
+                <div class="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                    <input type="search" placeholder="Search For Restaurants" name="searched" id="">
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="restos">
+            {% for restaurant in restaurants %}
+            <div class="resto">
+                <img src="{{restaurant.logo.url}}" alt=""> <br><br>
+                {% with ''|center:restaurant.review_score as range %}
+                {% for _ in range %}
+                <span class="fa fa-star checked"></span>
+                {% endfor %}
+                {% endwith %}
+                {% with decrement=5|sub:restaurant.review_score %}
+                {% with ''|center:decrement as range %}
+                {% for _ in range %}
+                <span class="fa fa-star"></span>
+                {% endfor %}
+                {% endwith %}
+                {% endwith %}
+                <h2><a href="{% url 'restaurant' restaurant.id %}">{{restaurant.name}}</a></h2>
+                <h3>{{restaurant.address}}</h3>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
-  {% endfor %}
-</div>
-</div>
-<br><br>
 
-  <script src="{% static '/js/restaurant.js'%}"></script>
+    <br><br><br>
+    <div class="restosDIV">
+        <hr style="width:60%; margin-left:20%" />
+        <br>
+        <div style="background-color:#f2f2f2;">
+            <div style="margin-left:4%;">
+                <h1>Announcements</h1><br>
+
+            </div>
+            <div style="margin-left:4%; margin-right:4%;">
+                <div id="btnContainer">
+
+                </div>
+
+                {% for announcement in announcements %}
+                <div class="row">
+                    <br>
+                    <div class="column" style="background-color:#fa8767;">
+                        <h2><a href="{% url 'restaurant' announcement.restaurant.id %}">{{announcement.restaurant}}</a>
+                        </h2>
+                        <p> {{announcement.text}}</p>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <script src="{% static '/js/restaurant.js'%}"></script>
 
 
 </body>
