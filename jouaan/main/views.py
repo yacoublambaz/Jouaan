@@ -83,8 +83,10 @@ def register_restaurant_view(request):
             user.groups.add(group)
             Restaurant.objects.create(
                 user = user,
+                name = username,
                 phone_number = phone,
                 email = email,
+                review_score = 4,
             )
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')

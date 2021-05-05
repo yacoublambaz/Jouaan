@@ -44,7 +44,7 @@ class Restaurant(models.Model):
     #signup date
     signup_date = models.DateTimeField(auto_now_add=True)
     #total review out of 5
-    review_score = models.IntegerField(null = True)
+    review_score = models.IntegerField(null = True,default=4)
     
     def __str__(self):
         return self.name
