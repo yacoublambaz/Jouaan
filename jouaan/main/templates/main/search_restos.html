@@ -36,7 +36,7 @@ background-blend-mode: lighten;
   <div class="restos">
     {% for restaurant in restos %}
     <div class="resto">
-      <img src="{{restaurant.profile_pic.url}}" alt=""> <br><br>
+      <img src="{{restaurant.logo.url}}" alt=""> <br><br>
       {% with ''|center:restaurant.review_score as range %}
       {% for _ in range %}
       <span class="fa fa-star checked"></span>
@@ -58,11 +58,20 @@ background-blend-mode: lighten;
   <h2>No match for your search.</h2>
   {% endif %}
   {% else %}
-  <h2>You haven't searched for anything!</h2>
+  <h2>Search for a restaurant to review!</h2>
   {% endif %}
 </div>
 <br> <br>
 
-  <button class="btnbk" onclick="history.back()">Go Back</button>
+  <button style="
+  background-color: #fc5b2f; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 50px" class="btnbk" onclick="history.back()">Go Back</button>
 
 </body>

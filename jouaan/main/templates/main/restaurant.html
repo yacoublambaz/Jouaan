@@ -1,5 +1,6 @@
 {% include 'main/navbar.html' %}
 {% load static %}
+{% load mathfilters %}
 <html>
 
 <head>
@@ -34,19 +35,19 @@ background-blend-mode: lighten;
 
     <div class="mySlides fade">
       <div class="numbertext">1 / 3</div>
-      <img src="{{restaurant.logo.url}}" style="display:block;margin-left:auto; margin-right:auto;">
+      <img src="{{restaurant.logo.url}}" style="display:block;margin-left:auto; margin-right:auto;max-width:500px;" >
       
 
     </div>
 
     <div class="mySlides fade">
       <div class="numbertext">2 / 3</div>
-      <img src="{{restaurant.menu.url}}" style="width:100%">
+      <img src="{{restaurant.menu.url}}" style="display:block;margin-left:auto; margin-right:auto;width:75%">
     </div>
 
     <div class="mySlides fade">
       <div class="numbertext">3 / 3</div>
-      <img src="{{restaurant.place.url}}" style="width:100%">
+      <img src="{{restaurant.place.url}}" style="display:block;margin-left:auto; margin-right:auto;width:75%">
     </div>
 
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -73,11 +74,18 @@ background-blend-mode: lighten;
   <br>
 </div>
   <div style="margin-left:4%;">
-  <span class="fa fa-star checked"></span>
-  <span class="fa fa-star checked"></span>
-  <span class="fa fa-star checked"></span>
-  <span class="fa fa-star checked"></span>
-  <span class="fa fa-star"></span>
+    {% with ''|center:restaurant.review_score as range %}
+    {% for _ in range %}
+    <span class="fa fa-star checked"></span>
+    {% endfor %}
+    {% endwith %}
+    {% with decrement=5|sub:restaurant.review_score %}
+    {% with ''|center:decrement as range %}
+    {% for _ in range %}
+    <span class="fa fa-star"></span>
+    {% endfor %}
+    {% endwith %}
+    {% endwith %}
 </div>
   <br><br>
 
@@ -101,6 +109,7 @@ background-blend-mode: lighten;
     {% for rev in review %}
     <div class="column" style="background-color:#ffa805;">
       <h2> {{rev.customer.name}} rated {{restaurant.name}} {{rev.review_score}} stars </h2>
+      <h5> Cleanliness: {{rev.cleanliness}}, Taste: {{rev.taste}}, Price {{rev.price}}, Environment {{rev.environment}}</h5>
       <br/>
       <p> {{rev.comments}}</p>
     </div>
@@ -111,6 +120,7 @@ background-blend-mode: lighten;
 </div>
 
 <br><br>
+{% if request.user.customer%}
   <hr style= "width:60%; margin-left:20%"/>
   <br><br>
   <div style="margin-left:4%; margin-right:4%;">
@@ -153,20 +163,7 @@ background-blend-mode: lighten;
       </div>
 
 
-      <div class="row">
-        <div class="col-25">
-          <label for="attr">Service</label>
-        </div>
-        <div class="col-75">
-          <select id="attr" name="service">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </div>
+      
 
       <div class="row">
         <div class="col-25">
@@ -197,19 +194,7 @@ background-blend-mode: lighten;
           </select>
         </div>
         
-        <div class="col-25">
-          <label for="attr">Total</label>
-        </div>
-        <div class="col-75">
-          <select id="attr" name="review_score">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </div>
+      
 
 
 
@@ -222,11 +207,15 @@ background-blend-mode: lighten;
         </div>
       </div>
       <div class="row">
-        <input style = "margin-right:15%;"type="submit" value="Submit">
+        <input  style = "margin-right:15%;"type="submit" value="Submit" onClick="history.go(0)">
       </div>
     </form>
+    {% else %}
+    <h2> You need to be logged in as a customer to be able to submit a review</h2>
+    <br><br><br>
   </div>
-
+ 
+{% endif%}
 </div>
   <script src="{% static '/js/restaurant.js'%}"></script> 
 </body>

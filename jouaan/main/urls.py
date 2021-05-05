@@ -13,5 +13,6 @@ urlpatterns = [
     path('update/',views.update,name="update"),
     path('update-rest/',views.update_restaurant,name="update-restaurant"),
     path('search_restos/',views.search_restos,name="search_restos"),
-    path('announcements/',views.announcements,name="announcements")
+    path('announcements/',views.announcements,name="announcements"),
+    path('review/',views.reviews,name="review")
 ]

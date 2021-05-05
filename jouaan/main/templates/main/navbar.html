@@ -13,17 +13,19 @@
 
 <body>
   <header style="max-height:40px;">
-    <a class="logo" href="/"><img src="{% static '/images/logo.png' %}" style="max-width:75%; " alt="logo"></a>
+    <a class="logo" href="/"><img src="{% static '/images/logo.png' %}" style="margin-top:auto;max-width:75%; " alt="logo"></a>
     <nav>
       <ul class="nav__links">
             {% if request.user.is_authenticated%}
             
             <li> <a href = "{% url 'logout' %}"> Logout </a></li>
-            <li><a href="{% url 'search_restos'%}">Submit a Review</a></li>
+            
             {% if request.user.restaurant %}
             <li> <a href = "{% url 'update-restaurant' %}"> Update Profile </a></li>
+            <li><a href="{% url 'announcements'%}">Submit an Announcement</a></li>
             
             {% else %}
+            <li><a href="{% url 'review'%}">Submit a Review</a></li>
             <li> <a href = "{% url 'update' %}"> Profile </a></li>  
             
             {% endif %}
@@ -31,7 +33,6 @@
             {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'register' %}">Register</a></li>
-            <li><a href="{% url 'search_restos'%}">Submit a Review</a></li>
             {% endif %}
             
       </ul>

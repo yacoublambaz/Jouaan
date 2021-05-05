@@ -61,13 +61,13 @@ class Review(models.Model):
     #restaurant ID (what restaurant is being reviewed?)
     restaurant_id = models.IntegerField(null=True)
     #Cleanliness (numbers from 1 to 5)
-    cleanliness = models.IntegerField(null=True)
+    cleanliness = models.IntegerField(null=True, default=1)
     #Taste
-    taste = models.IntegerField(null=True)
+    taste = models.IntegerField(null=True,default=1)
     #Environment
-    environment = models.IntegerField(null=True)
+    environment = models.IntegerField(null=True,default=1)
     #Price
-    price = models.IntegerField(null=True)
+    price = models.IntegerField(null=True,default=1)
     #Additional_comments
     comments = models.TextField(null=True)
     #Review out of 5 stars

@@ -50,7 +50,7 @@ class RestaurantForm(ModelForm):
     """Allows Restaurant to Edit Information"""
     class Meta:
         model=Restaurant
-        exclude = ['user','id']
+        exclude = ['user','id','review_score']
         widgets = {
          'logo': FileInput(),
          'menu': FileInput(),
@@ -60,7 +60,7 @@ class RestaurantForm(ModelForm):
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
-        fields = ("cleanliness","taste","environment","price","comments","review_score")
+        fields = ("cleanliness","taste","environment","price","comments")
 
 class AnnouncementForm(ModelForm):
     class Meta:

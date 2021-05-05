@@ -43,7 +43,7 @@ def logoutUser(request):
 def register_customer_view(request):
     if request.method == 'POST':
         form = newCustomerForm(request.POST)
-        
+        print(form,request.POST)
         if form.is_valid():
             
             user = form.save()
@@ -53,14 +53,16 @@ def register_customer_view(request):
             user.groups.add(group)
             Customer.objects.create(
                 user=user,
+                name=username,
                 email = email
             )
             messages.success(request,f"Hello, {username}, your account has been created!")
             return redirect('login')
         else:
-            
+            print(form.error_messages)
             for msg in form.error_messages:
-                messages.error(request, f" {form.error_messages[msg]}")
+                
+                messages.error(request, f" {form.error_messages[msg]} or your password is too common")
             return render(request,'main/register.html',{'form':form})
     #returns register page
     form = newCustomerForm()
@@ -94,7 +96,7 @@ def register_restaurant_view(request):
             print(form.error_messages)
             for msg in form.error_messages:
 
-                messages.error(request, f" {form.error_messages[msg]}")
+                messages.error(request, f" {form.error_messages[msg]} or your password is too common")
             return render(request,'main/register_rest.html',{'form':form})
     #returns register page
     form = newRestaurantForm()
@@ -105,10 +107,15 @@ def register_restaurant_view(request):
 #Hassan Jawad, Karim
 def index(request): #main page
     restaurants = Restaurant.objects.all()
-    announcements = Announcement.objects.all()
+    announcements = Announcement.objects.all()[:20]
     context = {'restaurants':restaurants,'announcements':announcements}
     return render(request,'main/index.html',context)
 
+def reviews(request):
+    restaurants = Restaurant.objects.all()
+    announcements = Announcement.objects.all()[:20]
+    context = {'restaurants':restaurants,'announcements':announcements}
+    return render(request,'main/review.html',context)
 @login_required(login_url='login')
 def update(request):
     customer = request.user.customer
@@ -131,6 +138,8 @@ def update_restaurant(request):
     if request.method == 'POST':
         
         form = RestaurantForm(request.POST,request.FILES,instance=restaurant)
+        print(form)
+        print(request.POST)
         if form.is_valid():
             form.save()
     context={'form':form}
@@ -145,6 +154,7 @@ def announcements(request):
         form = AnnouncementForm(request.POST)
         if form.is_valid():
             Announcement.objects.create(restaurant = restaurant, text = form.cleaned_data.get('text'))
+            return redirect('index')
     context={'form':form}
     return render(request,"main/announcement.html",context)
 #Henri, Firas
@@ -156,31 +166,39 @@ def restaurant_view(request, pk):
     current_total = 0
     current_count = 0
     for rev in review:
-        current_total += rev.review_score
-        current_count += 1
+        if rev.review_score:
+            current_total += rev.review_score
+            current_count += 1
     form = ReviewForm()
     if request.method == 'POST':
+        print(request.POST)
+        print(form)
         form = ReviewForm(request.POST)
         if form.is_valid():
+            print('form valid')
             cleanliness = form.cleaned_data.get('cleanliness')
             taste = form.cleaned_data.get('taste')
             environment = form.cleaned_data.get('environment')
             price = form.cleaned_data.get('price')
             comments = form.cleaned_data.get('comments')
-            review_score = form.cleaned_data.get('review_score')
+            total = (int(cleanliness) + int(taste) + int(environment) + int(price))//4
+            
+           
             Review.objects.create(
                 customer = request.user.customer,
                 restaurant_id = pk,
                 cleanliness=cleanliness,
                 price = price,
+                environment = environment,
+                taste = taste,
                 comments = comments,
-                review_score = review_score,
+                review_score = total,
             )
-            current_total += review_score
+            current_total += total
             current_count += 1
             new_review_score = current_total/current_count
             resto = Restaurant.objects.filter(id = pk).update(review_score = new_review_score)
-            return render(request,"main/restaurant.html",context= {'form':form,'review':review,'restaurant':restaurant})
+            return redirect('index')
 
             
     return render(request,"main/restaurant.html",context= {'form':form,'review':review,'restaurant':restaurant})
