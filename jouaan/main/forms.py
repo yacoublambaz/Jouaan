@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Customer,Restaurant,Review,Announcement
+from .models import Customer,Restaurant,Review,Announcement,Complaint
 from django.forms.widgets import FileInput
 #Customers Forms Below
 class newCustomerForm(UserCreationForm):
@@ -66,3 +66,9 @@ class AnnouncementForm(ModelForm):
     class Meta:
         model = Announcement
         fields = ("text",)
+
+class ComplaintForm(ModelForm):
+    class Meta:
+        model = Complaint
+        fields = ('choice','text')
+        exclude = ['id']

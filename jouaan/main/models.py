@@ -78,3 +78,8 @@ class Announcement(models.Model):
     restaurant = models.ForeignKey(Restaurant,on_delete = models.CASCADE)
     #text
     text = models.TextField(null=True)
+
+class Complaint(models.Model):
+    id = models.IntegerField(primary_key=True)
+    choice = models.CharField(max_length = 200, null = True, default = "1")
+    text = models.TextField(null=True)

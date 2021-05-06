@@ -207,9 +207,10 @@ background-blend-mode: lighten;
         </div>
       </div>
       <div class="row">
-        <input  style = "margin-right:15%;"type="submit" value="Submit" onClick="history.go(0)">
+        <input  style = "margin-right:15%;"type="submit" value="Submit" >
       </div>
     </form>
+    <h3> Any issues? <a href = "{% url 'complaint' %}"> Submit a complaint</a></h3>
     {% else %}
     <h2> You need to be logged in as a customer to be able to submit a review</h2>
     <br><br><br>

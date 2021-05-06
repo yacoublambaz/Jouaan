@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from .forms import newCustomerForm,CustomerForm,newRestaurantForm,RestaurantForm,ReviewForm,AnnouncementForm
+from .forms import newCustomerForm,CustomerForm,newRestaurantForm,RestaurantForm,ReviewForm,AnnouncementForm,ComplaintForm
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -8,9 +8,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group
-from .models import Customer, Restaurant, Review, Announcement
+from .models import Customer, Restaurant, Review, Announcement, Complaint
 # Create your views here.
-
 #Yacoub
 @unauthenticated_user
 def login_view(request):
@@ -45,19 +44,26 @@ def register_customer_view(request):
         form = newCustomerForm(request.POST)
        
         if form.is_valid():
-            
-            user = form.save()
             username = form.cleaned_data.get('username')
+            curr_user = Customer.objects.filter(name=username).count()
             email = form.cleaned_data.get('email')
-            group = Group.objects.get(name='customer')
-            user.groups.add(group)
-            Customer.objects.create(
-                user=user,
-                name=username,
-                email = email
-            )
-            messages.success(request,f"Hello, {username}, your account has been created!")
-            return redirect('login')
+            curr_email = Customer.objects.filter(email=email).count()
+            if curr_email != 0 or curr_user != 0:
+                messages.error(request, "An account already exists with this username and/or email")
+                return render(request,'main/register.html',{'form':form})
+            else:
+                user = form.save()
+                
+                
+                group = Group.objects.get(name='customer')
+                user.groups.add(group)
+                Customer.objects.create(
+                    user=user,
+                    name=username,
+                    email = email
+                )
+                messages.success(request,f"Hello, {username}, your account has been created!")
+                return redirect('login')
         else:
            
             for msg in form.error_messages:
@@ -77,21 +83,31 @@ def register_restaurant_view(request):
         form = newRestaurantForm(request.POST)
         
         if form.is_valid():
-            user = form.save()
             username = form.cleaned_data.get('username')
-            group = Group.objects.get(name='restaurant')
             phone = form.cleaned_data.get('phone_number')
             email = form.cleaned_data.get('email')
-            user.groups.add(group)
-            Restaurant.objects.create(
-                user = user,
-                name = username,
-                phone_number = phone,
-                email = email,
-                review_score = 4,
-            )
-            messages.success(request,f"Hello, {username}, your account has been created!")
-            return redirect('login')
+            curr_email = Restaurant.objects.filter(email=email).count()
+            curr_user = Restaurant.objects.filter(name=username).count()
+            curr_phone = Restaurant.objects.filter(phone_number=phone).count()
+            if curr_email != 0 or curr_user != 0 or curr_phone != 0:
+                messages.error(request, "An account already exists with this username, email, or phone number")
+                return render(request,'main/register_rest.html',{'form':form})
+            
+            else:
+                user = form.save()
+                
+                group = Group.objects.get(name='restaurant')
+                
+                user.groups.add(group)
+                Restaurant.objects.create(
+                    user = user,
+                    name = username,
+                    phone_number = phone,
+                    email = email,
+                    review_score = 4,
+                )
+                messages.success(request,f"Hello, {username}, your account has been created!")
+                return redirect('login')
         else:
             
             for msg in form.error_messages:
@@ -209,3 +225,16 @@ def search_restos(request):
     else:
         context={}
         return render(request,"main/search_restos.html",context)
+
+@login_required(login_url='login')
+def complaint(request):
+    if request.method == 'POST':
+        form = ComplaintForm(request.POST)
+        if form.is_valid():
+            form.save()
+            Complaint.objects.create(choice = form.cleaned_data.get('choice'), text = form.cleaned_data.get('text'))
+            return render(request,'main/complaint_success.html',{'form':form})
+    else:
+        form = ComplaintForm(request.POST)
+        complaints = Complaint.objects.all()
+    return render(request,'main/complaint.html',{'form':form,'complaints':complaints})
