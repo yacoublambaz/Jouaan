@@ -78,6 +78,8 @@ class Announcement(models.Model):
     restaurant = models.ForeignKey(Restaurant,on_delete = models.CASCADE)
     #text
     text = models.TextField(null=True)
+    #date
+    announcement_date = models.DateTimeField(auto_now_add=True,null=True)
 
 class Complaint(models.Model):
     id = models.IntegerField(primary_key=True)

@@ -123,7 +123,7 @@ def register_restaurant_view(request):
 #Hassan Jawad, Karim
 def index(request): #main page
     restaurants = Restaurant.objects.all()
-    announcements = Announcement.objects.all()[:20]
+    announcements = Announcement.objects.all()[:20][::-1]
     context = {'restaurants':restaurants,'announcements':announcements}
     return render(request,'main/index.html',context)
 

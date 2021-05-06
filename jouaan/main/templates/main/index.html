@@ -77,7 +77,10 @@ background-blend-mode: lighten;
                     <div class="column" style="background-color:#fa8767;">
                         <h2><a href="{% url 'restaurant' announcement.restaurant.id %}">{{announcement.restaurant}}</a>
                         </h2>
+                        <br>
                         <p> {{announcement.text}}</p>
+                        <br>
+                        <h5> {{ announcement.announcement_date}}</h5>
 
                     </div>
                 </div>
