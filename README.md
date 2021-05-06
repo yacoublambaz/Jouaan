@@ -3,7 +3,7 @@
 
 To work with Jouaan:
 1. Make sure you're in Jouaan/jouaan
-1. pip install requirements.txt
+1. pip install -r requirements.txt
 2. python manage.py runserver
 
 Features available:
@@ -11,8 +11,10 @@ Restaurant Side:
 1. Create Restaurant
 2. Update Restaurant Information
 3. Post an announcement
+4. Post a complaint
 
 Customer Side:
 1. Create Customer
 2. Update Customer Information
 3. Post a Review (You need to be logged in as customer to post a review) 
+4. Post a complaint
